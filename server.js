@@ -9,6 +9,10 @@ const mongoose = require("mongoose");
 
 const cors = require("cors");
 const morgan = require("morgan");
+///middleware
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(cors());
 ///////////////
 //database connection
 mongoose.connect(DATABASE_URL, {
@@ -70,7 +74,7 @@ app.put("/events/:id", async (req, res) => {
     res.status(400).json({ error });
   }
 });
-// distroy route
+// distory route
 app.delete("/events/:id", async (req, res) => {
   try {
     res.json(await Event.findByIdAndRemove(req.params.id));
@@ -78,6 +82,14 @@ app.delete("/events/:id", async (req, res) => {
     res.status(400).json({ error });
   }
 });
+// //show
+// app.get("event/:id", async(req,res)=>{
+//   try {
+//     res.json(await Event.findById());
+//   } catch (error) {
+//     res.status(400).json({ error });
+//   }
+// })
 //server listener
 app.listen(PORT, () => {
   console.log("okay");
